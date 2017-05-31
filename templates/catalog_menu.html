@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<div class="header">
+	<h1>Catalog App</h1>
+</div>
+{% include "category_panel.html" %}
+<div class="col-md-9">
+	<div class="flash">
+	    {% with messages = get_flashed_messages() %}
+	        {% if messages %}
+	            <ul>
+	                {% for message in messages %}
+	                    <li><strong>{{ message }}</strong></li>
+	                {% endfor %}
+	            </ul>
+	        {% endif %}
+	    {% endwith %}
+	</div>
+	{% if items %}
+		{% if items|length > 1 %}
+			<h2>{{ category }} Items ({{ items|length }} items)</h2>
+		{% else %}
+			<h2>{{ category }} Items ({{ items|length }} item)</h2>
+		{% endif %}
+		<ul class="list-group">
+		    {% for i in items %}
+		    <li class="list-group-item">
+	        	<span class="name">
+	        		<p>
+	        			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
+	        				{{i.name}}
+	        			</a>
+	        		</p>
+	        	</span>
+	<!-- 	        <span class="price"><p> {{i.price}} </p></span>
+		        <div class="description">
+		            <p>{{i.description}}</p>
+		        </div> -->
+		        <div class="editdeletepane">
+		            <a href="#">Edit</a>
+		            <a href="#">Delete</a>
+		        </div>
+		    </li>
+		    {% endfor %}
+		</ul>
+	{% else %}
+	    <div>
+	        You currently have no menu items.
+	    </div>
+	{% endif %}
+</div>
+
+{% endblock %}

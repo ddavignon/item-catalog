@@ -40,14 +40,87 @@ def showCatalogJSON():
 @app.route('/')
 @app.route('/catalog/')
 def showCatalog():
-    return "THis is the show catalog page"
+    return render_template('catalog.html')
 
 
 # selecting specific category shows all items available for that category
 @app.route('/catalog/<string:category>/')
 @app.route('/catalog/<string:category>/items')
 def showCategoryItems(category):
-    return "Show %s items" % category
+    items = [{
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }, {
+        'name': 'hi there',
+        'description': 'item description',
+        'id': 1,
+        'price': '$4.99',
+        'category': 'Soccer'
+    }]
+    return render_template('catalog_menu.html', category=category, items=items)
 
 
 # READ ITEM - selecting specific item show specific information about that item
@@ -348,10 +421,10 @@ def disconnect():
             del login_session['user_id']
         del login_session['provider']
         flash("You have successfully been logged out.")
-        return redirect(url_for('showRestaurants'))
+        return redirect(url_for('showCatalog'))
     else:
         flash("You were not logged in")
-        return redirect(url_for('showRestaurants'))
+        return redirect(url_for('showCatalog'))
 
 
 if __name__ == '__main__':
