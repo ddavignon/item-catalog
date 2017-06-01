@@ -12,6 +12,7 @@
 		        <div class="description">
 		            <p>{{i.description}}</p>
 		        </div> -->
+		        {% if i.user_id == session.user_id %}
 		        <div class="editdeletepane text-right">
 		            <a href="{{ url_for('editCatalogItem', category=i.category, catalog_item=i.name) }}">
 		            	<button class="btn btn-default edit">
@@ -25,6 +26,7 @@
 						</button>
 		            </a>
 		        </div>
+		        {% endif %}
 		    </li>
 		    {% endfor %}
 		{% else %}
