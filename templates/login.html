@@ -1,6 +1,6 @@
 {% extends "main.html" %}
 {% block content %}
-<div class="col-md-12 text-center card card-container">
+<div class="jumbotron text-center card card-container">
     <div id="result"></div>
     <h2>Please Login</h2>
     <hr>
@@ -15,7 +15,7 @@
         data-approvalprompt="force">
       </span>
     </div>
-    <div style="padding-bottom: 1rem">
+    <div>
         <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
             <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
         </fb:login-button>        
