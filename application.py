@@ -64,7 +64,10 @@ def showCategoryItems(category):
 # READ ITEM - selecting specific item show specific information about that item
 @app.route('/catalog/<string:category>/<string:catalog_item>/')
 def showCatalogItem(category, catalog_item):
-    return "Show %s from category %s" % (catalog_item, category)
+    item = session.query(
+        CatalogItem).filter_by(category=category, name=catalog_item).one()
+    return render_template(
+        'catalog_menu_item.html', category=category, item=item)
 
 
 # CREATE ITEM

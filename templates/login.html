@@ -1,6 +1,9 @@
 {% extends "main.html" %}
 {% block content %}
-<div>
+<div class="col-md-12 text-center card card-container">
+    <div id="result"></div>
+    <h2>Please Login</h2>
+    <hr>
     <div id="signInButton">
       <span class="g-signin"
         data-scope="openid email"
@@ -12,7 +15,11 @@
         data-approvalprompt="force">
       </span>
     </div>
-    <div id="result"></div>
+    <div style="padding-bottom: 1rem">
+        <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
+            <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
+        </fb:login-button>        
+    </div>
     <script>
         function signInCallback(authResult) {
         if (authResult['code']) {
@@ -90,13 +97,6 @@
         });
     }
     </script>
-
-
-    <button>
-        <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
-            <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
-        </fb:login-button>
-    </button>
 </div>
     <!--END FACEBOOK SIGN IN -->
 {% endblock %}
