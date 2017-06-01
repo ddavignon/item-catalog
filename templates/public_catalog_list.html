@@ -1,18 +1,20 @@
-	<ul class="list-group">
-		{% if items %}
-		    {% for i in items %}
-		    <li class="list-group-item">
-	        	<span class="name">
-        			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
-        				{{i.name}}
-        			</a>
-        			({{ i.category }})
-	        	</span>
-		    </li>
-		    {% endfor %}
-		{% else %}
+<div class="row">
+	{% if items %}
+	    {% for i in items %}
+	    <div class="col-md-3 card">
+        	<span class="name">
+    			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
+    				{{i.name}}
+    			</a>
+    			({{ i.category }})
+        	</span>
+	    </div>
+	    {% endfor %}
+	{% else %}
+	<ul>
 	    <li class="list-group-item">
 	        You currently have no menu items.
 	    </li>
-		{% endif %}
 	</ul>
+	{% endif %}
+</div>

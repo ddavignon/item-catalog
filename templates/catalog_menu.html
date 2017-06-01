@@ -3,7 +3,6 @@
 {% include "flash_alert.html" %}
 {% include "category_panel.html" %}
 <div class="col-md-9">
-	{% if quantity > 0 %}
 	<div class="row">
 		<div class="col-md-10">
 			{% if quantity != 1 %}
@@ -23,35 +22,7 @@
 		</div>
 		{% endif %}
 	</div>
-		<ul class="list-group">
-		    {% for i in items %}
-		    <li class="list-group-item">
-	        	<span class="name">
-	        		<p>
-	        			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
-	        				{{i.name}}
-	        			</a>
-	        			({{ i.category }})
-	        		</p>
-	        	</span>
-	<!-- 	        <span class="price"><p> {{i.price}} </p></span>
-		        <div class="description">
-		            <p>{{i.description}}</p>
-		        </div> -->
-		        {% if i.user_id == session.user_id %}
-			        <div class="editdeletepane">
-			            <a href="{{ url_for('editCatalogItem', category=i.category, catalog_item=i.name) }}">Edit</a>
-			            <a href="{{ url_for('deleteCatalogItem', category=i.category, catalog_item=i.name) }}">Delete</a>
-			        </div>
-			    {% endif %}
-		    </li>
-		    {% endfor %}
-		</ul>
-	{% else %}
-	    <div>
-	        <h3>You currently have no menu items.</h3>
-	    </div>
-	{% endif %}
+	{% include "catalog_list.html" %}
 </div>
 
 {% endblock %}
