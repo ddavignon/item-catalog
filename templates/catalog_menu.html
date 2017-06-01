@@ -1,27 +1,13 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-<div class="header">
-	<h1>Catalog App</h1>
-</div>
+{% include "flash_alert.html" %}
 {% include "category_panel.html" %}
 <div class="col-md-9">
-	<div class="flash">
-	    {% with messages = get_flashed_messages() %}
-	        {% if messages %}
-	            <ul>
-	                {% for message in messages %}
-	                    <li><strong>{{ message }}</strong></li>
-	                {% endfor %}
-	            </ul>
-	        {% endif %}
-	    {% endwith %}
-	</div>
-	{% if items %}
-		{% if items|length > 1 %}
-			<h2>{{ category }} Items ({{ items|length }} items)</h2>
+	{% if quantity > 0 %}
+		{% if quantity != 1 %}
+			<h2>{{ category }} Items ({{ quantity }} items)</h2>
 		{% else %}
-			<h2>{{ category }} Items ({{ items|length }} item)</h2>
+			<h2>{{ category }} Items ({{ quantity }} item)</h2>
 		{% endif %}
 		<ul class="list-group">
 		    {% for i in items %}
@@ -31,6 +17,7 @@
 	        			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
 	        				{{i.name}}
 	        			</a>
+	        			({{ i.category }})
 	        		</p>
 	        	</span>
 	<!-- 	        <span class="price"><p> {{i.price}} </p></span>
@@ -38,15 +25,15 @@
 		            <p>{{i.description}}</p>
 		        </div> -->
 		        <div class="editdeletepane">
-		            <a href="#">Edit</a>
-		            <a href="#">Delete</a>
+		            <a href="{{ url_for('editCatalogItem', category=i.category, catalog_item=i.name) }}">Edit</a>
+		            <a href="{{ url_for('deleteCatalogItem', category=i.category, catalog_item=i.name) }}">Delete</a>
 		        </div>
 		    </li>
 		    {% endfor %}
 		</ul>
 	{% else %}
 	    <div>
-	        You currently have no menu items.
+	        <h3>You currently have no menu items.</h3>
 	    </div>
 	{% endif %}
 </div>

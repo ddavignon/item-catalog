@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash  # noqa
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Catalog, MenuItem, User
+from database_setup import Base, CatalogItem, User
 from flask import session as login_session
 import random
 import string
@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
-APPLICATION_NAME = "Catalog Menu Application"
+APPLICATION_NAME = "Item Catalog Application"
 
 
 # Connect to Database and create database session
@@ -33,94 +33,29 @@ session = DBSession()
 # JSON APIs to show Catalog information
 @app.route('/catalog.json')
 def showCatalogJSON():
-    return "show catalog JSON"
+    items = session.query(CatalogItem).all()
+    return jsonify(CatalogItems=[i.serialize for i in items])
 
 
 # home page, show latest items and categories
 @app.route('/')
 @app.route('/catalog/')
 def showCatalog():
-    return render_template('catalog.html')
+    items = session.query(CatalogItem).all()
+    if 'username' not in login_session:
+        return render_template('public_catalog.html', items=items)
+    else:
+        return render_template('catalog.html', items=items)
 
 
 # selecting specific category shows all items available for that category
 @app.route('/catalog/<string:category>/')
 @app.route('/catalog/<string:category>/items')
 def showCategoryItems(category):
-    items = [{
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }, {
-        'name': 'hi there',
-        'description': 'item description',
-        'id': 1,
-        'price': '$4.99',
-        'category': 'Soccer'
-    }]
-    return render_template('catalog_menu.html', category=category, items=items)
+    items = session.query(CatalogItem).filter_by(category=category)
+    quantity = items.count()
+    return render_template(
+        'catalog_menu.html', category=category, items=items, quantity=quantity)
 
 
 # READ ITEM - selecting specific item show specific information about that item
@@ -130,21 +65,71 @@ def showCatalogItem(category, catalog_item):
 
 
 # CREATE ITEM
-@app.route('/catalog/new')
+@app.route('/catalog/new', methods=['GET','POST'])
 def newCatalogItem():
-    return "Add new catalog item"
+    """return "This page will be for making a new catalog item" """
+    if 'username' not in login_session:
+        return redirect('/login')
+    if request.method == 'POST':
+        addNewItem = CatalogItem(
+            name=request.form['name'],
+            description=request.form['description'],
+            price=request.form['price'],
+            category=request.form['category'],
+            user_id=login_session['user_id'])
+        session.add(addNewItem)
+        session.commit()
+        flash("New catalog item created!")
+        return redirect(url_for('showCatalog'))
+    else:
+        return render_template('new_catalog_item.html')
+
 
 
 # UPDATE ITEM
-@app.route('/catalog/<string:category>/<string:catalog_item>/edit')
+@app.route(
+    '/catalog/<string:category>/<string:catalog_item>/edit', methods=['GET','POST'])
 def editCatalogItem(category, catalog_item):
-    return "Edit catalog item %s from category %s" % (catalog_item, category)
+    """return "This page will be for making a updating catalog item" """
+    if 'username' not in login_session:
+        return redirect('/login')
+    editedItem = session.query(
+        CatalogItem).filter_by(name=catalog_item).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            editedItem.name = request.form['name']
+        if request.form['description']:
+            editedItem.description = request.form['description']
+        if request.form['price']:
+            editedItem.price = request.form['price']
+        if request.form['category']:
+            editedItem.category = request.form['category']
+        session.add(editedItem)
+        session.commit()
+        flash("Catalog item updated!")
+        return redirect(url_for('showCatalog'))
+    else:
+        return render_template(
+            'edit_catalog_item.html',
+            category=category,
+            catalog_item=catalog_item,
+            item=editedItem)
 
 
 # DELETE ITEM
-@app.route('/catalog/<string:category>/<string:catalog_item>/delete')
+@app.route(
+    '/catalog/<string:category>/<string:catalog_item>/delete', methods=['GET','POST'])
 def deleteCatalogItem(category, catalog_item):
-    return "Delete catalog item %s from category %s" % (catalog_item, category)
+    if 'username' not in login_session:
+        return redirect('/login')
+    itemToDelete = session.query(CatalogItem).filter_by(name=catalog_item).one()
+    if request.method == 'POST':
+        session.delete(itemToDelete)
+        session.commit()
+        flash('Catalog Item Successfully Deleted')
+        return redirect(url_for('showCatalog'))
+    else:
+        return render_template('delete_catalog_item.html', item=itemToDelete)
 
 
 # Login route, create anit-forgery state token

@@ -1,49 +1,21 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-<div class="header">
-	<h1>Catalog App</h1>
-</div>
+{% include "flash_alert.html" %}
 {% include "category_panel.html" %}
 <div class="col-md-9">
-	<div class="flash">
-	    {% with messages = get_flashed_messages() %}
-	        {% if messages %}
-	            <ul>
-	                {% for message in messages %}
-	                    <li><strong>{{ message }}</strong></li>
-	                {% endfor %}
-	            </ul>
-	        {% endif %}
-	    {% endwith %}
+	<div class="row">
+		<div class="col-md-10">
+			<h2>Latest Items</h2>
+		</div>
+		<div lass="col-md-2">
+			<a href = "{{ url_for('newCatalogItem') }}">
+				<button class="btn btn-default primary">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
+						Add Item
+				</button>
+			</a>
+		</div>
 	</div>
-	<h2>Latest Items</h2>
-	<ul class="list-group">
-		{% if items %}
-		    {% for i in items %}
-		    <li class="list-group-item">
-	        	<span class="name">
-	        		<p>
-	        			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
-	        				{{i.name}}
-	        			</a>
-	        		</p>
-	        	</span>
-	<!-- 	        <span class="price"><p> {{i.price}} </p></span>
-		        <div class="description">
-		            <p>{{i.description}}</p>
-		        </div> -->
-		        <div class="editdeletepane">
-		            <a href="#">Edit</a>
-		            <a href="#">Delete</a>
-		        </div>
-		    </li>
-		    {% endfor %}
-		{% else %}
-	    <li class="list-group-item">
-	        You currently have no menu items.
-	    </li>
-		{% endif %}
-	</ul>
+	{% include "catalog_list.html" %}
 </div>
 {% endblock %}}

@@ -1,0 +1,9 @@
+nav {
+	margin: 0;
+	width: 100%;
+}
+
+ul, 
+li {
+	list-style-type: none
+}

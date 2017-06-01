@@ -1,4 +1,4 @@
-<div class="row top-menu">
+<!-- <div class="row top-menu">
 	<div class="col-md-6 text-right">
 		{%if 'username' not in session %}
 			<a href="{{url_for('showLogin')}}">Click Here to Login </a>
@@ -7,3 +7,26 @@
 		{% endif %}	
 	</div>
 </div>
+ -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('showCatalog') }}}">Catalog App</a>
+    </div>
+      <ul class="nav navbar-nav navbar-right">
+        {%if 'username' not in session %}
+          <li><a href="{{url_for('showLogin')}}">Click Here to Login </a></li>
+        {% else %}
+          <li><a href="{{url_for('disconnect')}}">Logout </a></li>
+        {% endif %} 
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

@@ -16,24 +16,24 @@ class User(Base):
     picture = Column(String(250))
 
 
-class Catalog(Base):
-    __tablename__ = 'catalog'
+# class Catalog(Base):
+#     __tablename__ = 'catalog'
    
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+#     id = Column(Integer, primary_key=True)
+#     name = Column(String(250), nullable=False)
+#     user_id = Column(Integer, ForeignKey('user.id'))
+#     user = relationship(User)
 
-    @property
-    def serialize(self):
-       """Return object data in easily serializeable format"""
-       return {
-           'name'         : self.name,
-           'id'           : self.id,
-       }
+#     @property
+#     def serialize(self):
+#        """Return object data in easily serializeable format"""
+#        return {
+#            'name'         : self.name,
+#            'id'           : self.id,
+#        }
 
 
-class MenuItem(Base):
+class CatalogItem(Base):
     __tablename__ = 'catalog_item'
 
     name =Column(String(80), nullable = False)
@@ -41,8 +41,8 @@ class MenuItem(Base):
     description = Column(String(250))
     price = Column(String(8))
     category = Column(String(250))
-    catalog_id = Column(Integer, ForeignKey('catalog.id'))
-    catalog = relationship(Catalog)
+    # catalog_id = Column(Integer, ForeignKey('catalog.id'))
+    # catalog = relationship(Catalog)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 

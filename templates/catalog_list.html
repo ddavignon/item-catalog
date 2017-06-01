@@ -1,0 +1,35 @@
+	<ul class="list-group">
+		{% if items %}
+		    {% for i in items %}
+		    <li class="list-group-item">
+	        	<span class="name">
+        			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
+        				{{i.name}}
+        			</a>
+        			({{ i.category }})
+	        	</span>
+	<!-- 	        <span class="price"><p> {{i.price}} </p></span>
+		        <div class="description">
+		            <p>{{i.description}}</p>
+		        </div> -->
+		        <div class="editdeletepane text-right">
+		            <a href="{{ url_for('editCatalogItem', category=i.category, catalog_item=i.name) }}">
+		            	<button class="btn btn-default edit">
+							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+								Edit
+						</button></a>
+		            <a href="{{ url_for('deleteCatalogItem', category=i.category, catalog_item=i.name) }}">
+		            	<button class="btn btn-default delete">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+								Delete
+						</button>
+		            </a>
+		        </div>
+		    </li>
+		    {% endfor %}
+		{% else %}
+	    <li class="list-group-item">
+	        You currently have no menu items.
+	    </li>
+		{% endif %}
+	</ul>

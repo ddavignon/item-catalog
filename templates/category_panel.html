@@ -1,8 +1,15 @@
 <div class="col-md-3" style="height: 100%">
   <h2>Category</h2>
   <ul class="list-group">
-    <li class="list-group-item">First item</li>
-    <li class="list-group-item">Second item</li>
-    <li class="list-group-item">Third item</li>
+  	<li class="list-group-item"><a href="{{ url_for('showCatalog') }}">Latest Items</a></li>
+    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Soccer') }}">Soccer</a></li>
+    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Basketball') }}">Basketball</a></li>
+    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Baseball') }}">Baseball</a></li>
+    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Frisbee') }}">Frisbee</a></li>
+    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Snowboarding') }}">Snowboarding</a></li>
+    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Rock Climbing') }}">Rock Climbing</a></li>
+    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Foosball') }}">Foosball</a></li>
+    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Skating') }}">Skating</a></li>
+    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Hockey') }}">Hockey</a></li>
   </ul>
 </div>
