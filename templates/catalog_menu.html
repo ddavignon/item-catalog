@@ -4,11 +4,25 @@
 {% include "category_panel.html" %}
 <div class="col-md-9">
 	{% if quantity > 0 %}
-		{% if quantity != 1 %}
+	<div class="row">
+		<div class="col-md-10">
+			{% if quantity != 1 %}
 			<h2>{{ category }} Items ({{ quantity }} items)</h2>
-		{% else %}
+			{% else %}
 			<h2>{{ category }} Items ({{ quantity }} item)</h2>
+			{% endif %}
+		</div>
+		{% if session.user_id %}
+		<div lass="col-md-2">
+			<a href = "{{ url_for('newCatalogItem') }}">
+				<button class="btn btn-default primary">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
+						Add Item
+				</button>
+			</a>
+		</div>
 		{% endif %}
+	</div>
 		<ul class="list-group">
 		    {% for i in items %}
 		    <li class="list-group-item">

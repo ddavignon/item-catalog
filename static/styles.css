@@ -11,3 +11,7 @@ li {
 li {
 	margin-left: 0;
 }
+
+.btn {
+	border-radius: 0px;
+}
