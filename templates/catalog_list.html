@@ -1,26 +1,23 @@
 <div class="row">
-	{% if items %}
+	{% if items and quantity > 0 %}
 	    {% for i in items %}
-	    <div class="col-md-3 card">
+	    <div class="col-md-12 card">
+	    <!-- <img class="img-thumbnail pull-left" src="http://placehold.it/150" alt="image placeholder" /> -->
         	<span class="name">
     			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
-    				{{i.name}}
+    				<h3>{{i.name}}</h3>
     			</a>
-    			({{ i.category }})
+    				({{ i.category }})	
         	</span>
-<!-- 	        <span class="price"><p> {{i.price}} </p></span>
-	        <div class="description">
-	            <p>{{i.description}}</p>
-	        </div> -->
 	        {% if i.user_id == session.user_id %}
-	        <div class="editdeletepane text-right">
+	        <div class="editdeletepane pull-right">
 	            <a href="{{ url_for('editCatalogItem', category=i.category, catalog_item=i.name) }}">
 	            	<button class="btn btn-default edit">
 						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
 							Edit
 					</button></a>
 	            <a href="{{ url_for('deleteCatalogItem', category=i.category, catalog_item=i.name) }}">
-	            	<button class="btn btn-default delete">
+	            	<button class="btn btn-danger delete">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
 							Delete
 					</button>

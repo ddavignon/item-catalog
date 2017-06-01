@@ -42,17 +42,20 @@ def showCatalogJSON():
 @app.route('/catalog/')
 def showCatalog():
     items = session.query(CatalogItem).order_by(CatalogItem.id.desc())
+    quantity = items.count()
     if 'username' not in login_session:
-        return render_template('public_catalog.html', items=items)
+        return render_template(
+            'public_catalog.html', items=items, quantity=quantity)
     else:
-        return render_template('catalog.html', items=items)
+        return render_template('catalog.html', items=items, quantity=quantity)
 
 
 # selecting specific category shows all items available for that category
 @app.route('/catalog/<string:category>/')
 @app.route('/catalog/<string:category>/items')
 def showCategoryItems(category):
-    items = session.query(CatalogItem).filter_by(category=category).order_by(CatalogItem.id.desc())
+    items = session.query(
+        CatalogItem).filter_by(category=category).order_by(CatalogItem.id.desc())
     quantity = items.count()
     return render_template(
         'catalog_menu.html', category=category, items=items, quantity=quantity)

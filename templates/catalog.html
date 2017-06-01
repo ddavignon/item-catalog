@@ -4,17 +4,15 @@
 {% include "category_panel.html" %}
 <div class="col-md-9">
 	<div class="row">
-		<div class="col-md-10">
-			<h2>Latest Items</h2>
-		</div>
-		<div lass="col-md-2">
+		<div class="pull-right">
 			<a href = "{{ url_for('newCatalogItem') }}">
-				<button class="btn btn-default primary">
+				<button class="btn btn-basic primary">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
 						Add Item
 				</button>
 			</a>
 		</div>
+		<h2>Latest Items</h2>
 	</div>
 	{% include "catalog_list.html" %}
 </div>
