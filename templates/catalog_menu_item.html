@@ -1,36 +1,38 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "flash_alert.html" %}
- <div class="col-md-12 card">
+<div class="row col-md-6 col-md-offset-3">
+	 <div class="card detail-card item-info-card">
 <!-- <img class="img-thumbnail pull-left" src="http://placehold.it/150" alt="image placeholder" /> -->
-	<div class="row">
-		<div class="col-md-9">
-			<h2>{{item.name}}<br><small>({{ item.category }})</small></h2>
+		<div class="row">
+			<div class="col-md-9">
+				<h2>{{item.name}}<br><small>({{ item.category }})</small></h2>
+			</div>
+			<div class="col-md-3 text-right">
+				<h4>${{ item.price }}</h4>
+			</div>		
 		</div>
-		<div class="col-md-3 text-right">
-			<h4>${{ item.price }}</h4>
-		</div>		
-	</div>
-	<hr>
-	<div class="row item-description">
-		<p>
-		{{ item.description }}
-		</p>
-	    {% if item.user_id == session.user_id %}
-	    <div class="editdeletepane pull-right">
-	        <a href="{{ url_for('editCatalogItem', category=item.category, catalog_item=item.name) }}">
-	        	<button class="btn btn-default edit">
-					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
-						Edit
-				</button></a>
-	        <a href="{{ url_for('deleteCatalogItem', category=item.category, catalog_item=item.name) }}">
-	        	<button class="btn btn-danger delete">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
-						Delete
-				</button>
-	        </a>
-	    </div>
-	    {% endif %}
+		<hr>
+		<div class="row item-description">
+			<p>
+			{{ item.description }}
+			</p>
+		    {% if item.user_id == session.user_id %}
+		    <div class="editdeletepane pull-right">
+		        <a href="{{ url_for('editCatalogItem', category=item.category, catalog_item=item.name) }}">
+		        	<button class="btn btn-default edit">
+						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+							Edit
+					</button></a>
+		        <a href="{{ url_for('deleteCatalogItem', category=item.category, catalog_item=item.name) }}">
+		        	<button class="btn btn-danger delete">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+							Delete
+					</button>
+		        </a>
+		    </div>
+		    {% endif %}
+		</div>
 	</div>
 </div>
 {% endblock %}

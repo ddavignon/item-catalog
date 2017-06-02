@@ -60,3 +60,7 @@ h3 {
 .item-info-card {
 	padding: 1rem;
 }
+
+.detail-card {
+	margin: 0;
+}

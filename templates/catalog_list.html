@@ -1,7 +1,7 @@
 <div class="row">
 	{% if items and quantity > 0 %}
 	    {% for i in items %}
-	    <div class="col-md-12 card">
+	    <div class="col-md-12 card list-card">
 	    <!-- <img class="img-thumbnail pull-left" src="http://placehold.it/150" alt="image placeholder" /> -->
         	<span class="name">
     			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
