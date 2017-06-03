@@ -29,6 +29,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 # --------------------------------------
 # JSON APIs to show Catalog information
 # --------------------------------------
@@ -70,6 +71,7 @@ def showCatalog():
     else:
         return render_template('catalog.html', categories=categories, items=items, quantity=quantity)
 
+
 # CREATE - New category
 @app.route('/categories/new', methods=['GET','POST'])
 def newCategory():
@@ -85,7 +87,7 @@ def newCategory():
             user_id=login_session['user_id'])
         session.add(newCategory)
         session.commit()
-        flash("New category created!")
+        flash("New category created!", 'succes')
         return redirect(url_for('showCatalog'))
     else:
         return render_template('new_category.html')
@@ -102,7 +104,7 @@ def editCategory(category_id):
     if request.method == 'POST':
         if request.form['name']:
             editedCategory.name = request.form['name']
-            flash('Category Successfully Edited %s' % editedCategory.name)
+            flash('Category Successfully Edited %s' % editedCategory.name, 'success')
             return redirect(url_for('showCatalog'))
     else:
         return render_template(
@@ -120,13 +122,14 @@ def deleteCategory(category_id):
         return "<script>function myFunction() {alert('You are not authorized!')}</script><body onload='myFunction()'>"
     if request.method == 'POST':
         session.delete(categoryToDelete)
-        flash('%s Successfully Deleted' % categoryToDelete.name)
+        flash('%s Successfully Deleted' % categoryToDelete.name, 'success')
         session.commit()
         return redirect(
             url_for('showCatalog', category_id=category_id))
     else:
         return render_template(
             'delete_category.html', category=categoryToDelete)
+
 
 # --------------------------------------
 # CRUD for category items
@@ -178,7 +181,7 @@ def newCatalogItem():
             user_id=login_session['user_id'])
         session.add(addNewItem)
         session.commit()
-        flash("New catalog item created!")
+        flash("New catalog item created!", 'success')
         return redirect(url_for('showCatalog'))
     else:
         return render_template('new_catalog_item.html', categories = categories)
@@ -205,7 +208,7 @@ def editCatalogItem(category_id, catalog_item_id):
             editedItem.category = request.form['category']
         session.add(editedItem)
         session.commit()
-        flash("Catalog item updated!")
+        flash("Catalog item updated!", 'success')
         return redirect(url_for('showCatalog'))
     else:
         categories = session.query(Category).all()
@@ -226,7 +229,7 @@ def deleteCatalogItem(category_id, catalog_item_id):
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
-        flash('Catalog Item Successfully Deleted')
+        flash('Catalog Item Successfully Deleted', 'success')
         return redirect(url_for('showCatalog'))
     else:
         return render_template('delete_catalog_item.html', item=itemToDelete)
@@ -312,7 +315,7 @@ def fbconnect():
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
 
-    flash("Now logged in as %s" % login_session['username'])
+    flash("Now logged in as %s" % login_session['username'], 'success')
     return output
 
 
@@ -419,7 +422,7 @@ def gconnect():
     output += '<img src="'
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '  # noqa
-    flash("you are now logged in as %s" % login_session['username'])
+    flash("you are now logged in as %s" % login_session['username'], 'success')
     print "done!"
     return output
 
@@ -508,10 +511,10 @@ def disconnect():
         if 'user_id' in login_session:
             del login_session['user_id']
         del login_session['provider']
-        flash("You have successfully been logged out.")
+        flash("You have successfully been logged out.", 'success')
         return redirect(url_for('showCatalog'))
     else:
-        flash("You were not logged in")
+        flash("You were not logged in", 'danger')
         return redirect(url_for('showCatalog'))
 
 
