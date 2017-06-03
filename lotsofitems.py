@@ -37,14 +37,14 @@ session.commit()
 catelogItem1 = CatalogItem(
     name = "CMB-101",
     description = "2015 Samsung Chromebook, 4GB RAM",
-    price = "$199.99",
-    category = category1)
+    price = "199.99",
+    category = session.query(Category).filter_by(name = "Chromebook"))
 
 catelogItem2 = CatalogItem(
     name = "CMB-102",
     description = "2016 Acer Chromebook, 4GB RAM",
-    price = "$199.99",
-    category = category1)
+    price = "199.99",
+    category = session.query(Category).filter_by(name = "Chromebook"))
 
 session.add(catelogItem1)
 session.commit()
@@ -55,8 +55,8 @@ session.commit()
 catalogItem3 = CatalogItem(
     name = "CMB-102",
     description = "2016 MacBook Pro 13\", 16GB RAM, 256 SSD",
-    price = "$1399.99",
-    category = category2)
+    price = "1399.99",
+    category = session.query(Category).filter_by(name = "MacBook Pro"))
 
 session.add(catalogItem3)
 session.commit()

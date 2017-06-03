@@ -135,11 +135,11 @@ def showCategoryItems(category_id):
 
 
 # READ ITEM - selecting specific item show specific information about that item
-@app.route('/categories/<int:category_id>/<path:catalog_item>/')
-def showCatalogItem(category_id, catalog_item):
+@app.route('/categories/<int:category_id>/item/<int:catalog_item_id>/')
+def showCatalogItem(category_id, catalog_item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(
-        CatalogItem).filter_by(id=category_id, name=catalog_item).one()
+        CatalogItem).filter_by(id=catalog_item_id, category_id=category_id).one()
     return render_template(
         'catalog_menu_item.html', category=category, item=item)
 
@@ -152,12 +152,11 @@ def newCatalogItem():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        print request.form
         addNewItem = CatalogItem(
             name=request.form['name'],
             description=request.form['description'],
             price=request.form['price'],
-            category=request.form['category'],
+            category_id=request.form['category'],
             user_id=login_session['user_id'])
         session.add(addNewItem)
         session.commit()
