@@ -87,7 +87,7 @@ def newCategory():
             user_id=login_session['user_id'])
         session.add(newCategory)
         session.commit()
-        flash("New category created!", 'succes')
+        flash("New category created!", 'success')
         return redirect(url_for('showCatalog'))
     else:
         return render_template('new_category.html')
