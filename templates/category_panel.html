@@ -2,14 +2,21 @@
   <h2>Category</h2>
   <ul class="list-group">
   	<li class="list-group-item"><a href="{{ url_for('showCatalog') }}">Latest Items</a></li>
-    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Soccer') }}">Soccer</a></li>
-    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Basketball') }}">Basketball</a></li>
-    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Baseball') }}">Baseball</a></li>
-    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Frisbee') }}">Frisbee</a></li>
-    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Snowboarding') }}">Snowboarding</a></li>
-    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Rock Climbing') }}">Rock Climbing</a></li>
-    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Foosball') }}">Foosball</a></li>
-    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Skating') }}">Skating</a></li>
-    <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category='Hockey') }}">Hockey</a></li>
+    {% for c in categories %}
+      <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category_id=c.id) }}">{{ c.name }}</a>
+      {% if c.user_id == session.user_id %}
+        <a href="{{ url_for('editCatalogItem', category_id=c.id, catalog_item_id=c.id) }}">
+          <button class="btn btn-default edit">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+          </button>
+        </a>
+        <a href="{{ url_for('deleteCatalogItem', category_id=c.id, catalog_item_id=c.id) }}">
+          <button class="btn btn-danger delete">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
+        </a>
+      {% endif %}
+      </li>
+    {% endfor %}
   </ul>
 </div>

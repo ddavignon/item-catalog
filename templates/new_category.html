@@ -1,0 +1,31 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="card card-section item-info-card">
+	<div class="row banner menu">
+		<div class="col-md-12 padding-none">
+			<h1>New Category</h1>
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 padding-top">
+			<form method="post">
+				<div class="form-group">
+					<label for="name">Name:</label>
+					<input type ="text" maxlength="50" class="form-control" name="name" placeholder="Name of the category">
+                    <div style="margin-top: 1rem">
+                        <button type="submit" class="btn btn-basic" id="submit" type="submit">
+                        <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Create</button>
+                        <button class="btn btn-default delete">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <a href = "{{ url_for('showCatalog') }}">
+                                Cancel
+                            </a>
+                        </button>
+                    </div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -21,58 +21,7 @@
 						<div class="input-group-addon">$</div>
 						<input type ="text" class="form-control" maxlength="10" name="price" placeholder="Price in $">
 					</div>
-					<label for="Category">Category:</label>
-					<div class="row">
-						<div class="col-md-3">
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category1" value="Soccer">Soccer
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category2" value="Basketball">Basketball
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category3" value="Baseball">Baseball
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category4" value="Frisbee">Frisbee
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category5" value="Snowboarding">Snowboarding
-							  </label>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category6" value="Rock Climbing">Rock Climbing
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category7" value="Foosball">Foosball
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category8" value="Skating">Skating
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category9" value="Hockey">Hockey
-							  </label>
-							</div>
-						</div>
-					</div>
+					{% include "category_form_list.html" %}
 					<button type="submit" class="btn btn-basic" id="submit" type="submit">
 					<span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Create</button>
 					<button class="btn btn-default delete">
