@@ -39,6 +39,20 @@ def showCatalogJSON():
     return jsonify(CatalogItems=[i.serialize for i in items])
 
 
+@app.route('/api/v1/categories/<int:category_id>/item/<int:catalog_item_id>/JSON')
+def catalogItemJSON(category_id, catalog_item_id):
+    """Returns JSON of selected item in catalog"""
+    Catalog_Item = session.query(CatalogItem).filter_by(id=catalog_item_id).one()
+    return jsonify(Catalog_Item=Catalog_Item.serialize)
+
+
+@app.route('/api/v1/categories/JSON')
+def categoriesJSON():
+    """Returns JSON of all categories in catalog"""
+    categories = session.query(Category).all()
+    return jsonify(Categories=[r.serialize for r in categories])
+
+
 # --------------------------------------
 # CRUD for categories
 # --------------------------------------
@@ -80,6 +94,7 @@ def newCategory():
 # EDIT a category
 @app.route('/categories/<int:category_id>/edit/', methods=['GET', 'POST'])
 def editCategory(category_id):
+    """Allows user to edit an existing category"""
     if 'username' not in login_session:
         return redirect('/login')
     editedCategory = session.query(
@@ -96,6 +111,7 @@ def editCategory(category_id):
 # DELETE a category
 @app.route('/categories/<int:category_id>/delete/', methods=['GET', 'POST'])
 def deleteCategory(category_id):
+    """Allows user to delete an existing category"""
     if 'username' not in login_session:
         return redirect('/login')
     categoryToDelete = session.query(
@@ -112,12 +128,14 @@ def deleteCategory(category_id):
         return render_template(
             'delete_category.html', category=categoryToDelete)
 
-
-
+# --------------------------------------
+# CRUD for category items
+# --------------------------------------
 # READ - show category items
 @app.route('/categories/<int:category_id>/')
 @app.route('/categories/<int:category_id>/items/')
 def showCategoryItems(category_id):
+    """returns items in category"""
     category = session.query(Category).filter_by(id=category_id).one()
     categories = session.query(Category).all()
     creator = getUserInfo(category.user_id)
@@ -136,6 +154,7 @@ def showCategoryItems(category_id):
 # READ ITEM - selecting specific item show specific information about that item
 @app.route('/categories/<int:category_id>/item/<int:catalog_item_id>/')
 def showCatalogItem(category_id, catalog_item_id):
+    """returns category item"""
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(
         CatalogItem).filter_by(id=catalog_item_id).one()
@@ -200,6 +219,7 @@ def editCatalogItem(category_id, catalog_item_id):
 @app.route(
     '/categories/<int:category_id>/item/<int:catalog_item_id>/delete', methods=['GET','POST'])
 def deleteCatalogItem(category_id, catalog_item_id):
+    """return "This page will be for deleting a catalog item" """
     if 'username' not in login_session:
         return redirect('/login')
     itemToDelete = session.query(CatalogItem).filter_by(id=catalog_item_id).one()
@@ -212,6 +232,9 @@ def deleteCatalogItem(category_id, catalog_item_id):
         return render_template('delete_catalog_item.html', item=itemToDelete)
 
 
+# --------------------------------------
+# Login Handling
+# --------------------------------------
 # Login route, create anit-forgery state token
 @app.route('/login')
 def showLogin():
