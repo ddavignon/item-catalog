@@ -20,8 +20,8 @@ li {
 	list-style-type: none
 }
 
-li {
-	padding-left: 30px;
+ul {
+	padding-left: 0;
 }
 
 h3 {
@@ -46,7 +46,7 @@ h3 {
 }
 
 .name {
-	padding: 1rem;
+	padding: 0;
 }
 
 .editdeletepane {
@@ -63,4 +63,14 @@ h3 {
 
 .detail-card {
 	margin: 0;
+}
+
+.navbar-profile-image {
+	height: 40px;
+	padding-bottom: 15px;
+}
+
+.navbar-brand {
+	text-transform: uppercase;
+	font-size: 2.5rem;
 }

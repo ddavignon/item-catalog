@@ -2,20 +2,35 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <a class="navbar-brand" href="{{ url_for('showCatalog') }}">Catalog App</a>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('showCatalog') }}"><span style="color:white">Inventory Catalog</span></a>
     </div>
    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    {% if session.user_id %}
-     <ul class="nav navbar-nav">
-      <li><a href="{{ url_for('newCategory') }}">Add Category</a></li>
-     </ul>
-    {% endif %}
       <ul class="nav navbar-nav navbar-right">
         {%if 'username' not in session %}
-          <li><a href="{{url_for('showLogin')}}">Click Here to Login </a></li>
+          <li><a href="{{url_for('showLogin')}}">Login</a></li>
         {% else %}
-          <li><a href="{{url_for('disconnect')}}">Logout </a></li>
+          {% if session.user_id %}
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ session['picture']}}" alt="profile image" class="navbar-profile-image image-responsive pull-left">
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{{ url_for('newCategory') }}">Add Category</a></li>
+                <li><a href="{{ url_for('newCatalogItem') }}">Add Item</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{{ url_for('showCatalog') }}">Home</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{{url_for('disconnect')}}">Logout: {{ session['email']}} </a></li>
+              </ul>
+            </li>
+          {% endif %}
         {% endif %} 
       </ul>
     </div><!-- /.navbar-collapse -->

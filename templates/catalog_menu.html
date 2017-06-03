@@ -4,22 +4,24 @@
 {% include "category_panel.html" %}
 <div class="col-md-9">
 	<div class="row">
-		{% if session.user_id %}
-		<div class="pull-right">
-			<a href = "{{ url_for('newCatalogItem') }}">
-				<button class="btn btn-basic primary">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
-						Add Item
-				</button>
-			</a>
+		<div class="col-md-12">
+			{% if quantity != 1 %}
+			<h2>{{ category.name }} Items ({{ quantity }} items)
+			{% else %}
+			<h2>{{ category.name }} Items ({{ quantity }} item)
+			{% endif %}
+			{% if session.user_id %}
+			<div class="pull-right">
+				<a href = "{{ url_for('newCatalogItem') }}">
+					<button class="btn btn-success primary">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
+							Add Item
+					</button>
+				</a>
+			</div>
+			{% endif %}
+			</h2>
 		</div>
-		{% endif %}
-
-		{% if quantity != 1 %}
-		<h2>{{ category.name }} Items ({{ quantity }} items)</h2>
-		{% else %}
-		<h2>{{ category.name }} Items ({{ quantity }} item)</h2>
-		{% endif %}
 	</div>
 	{% include "catalog_list.html" %}
 </div>
