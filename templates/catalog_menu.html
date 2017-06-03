@@ -16,9 +16,9 @@
 		{% endif %}
 
 		{% if quantity != 1 %}
-		<h2>{{ category }} Items ({{ quantity }} items)</h2>
+		<h2>{{ category.name }} Items ({{ quantity }} items)</h2>
 		{% else %}
-		<h2>{{ category }} Items ({{ quantity }} item)</h2>
+		<h2>{{ category.name }} Items ({{ quantity }} item)</h2>
 		{% endif %}
 	</div>
 	{% include "catalog_list.html" %}

@@ -3,7 +3,20 @@
   <ul class="list-group">
   	<li class="list-group-item"><a href="{{ url_for('showCatalog') }}">Latest Items</a></li>
     {% for c in categories %}
-      <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category=c.name) }}">{{ c.name }}</a></li>
+      <li class="list-group-item"><a href="{{ url_for('showCategoryItems', category_id=c.id) }}">{{ c.name }}</a>
+      {% if c.user_id == session.user_id %}
+        <a href="{{ url_for('editCatalogItem', category=c.category, catalog_item=c.name) }}">
+          <button class="btn btn-default edit">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+          </button>
+        </a>
+        <a href="{{ url_for('deleteCatalogItem', category=c.category, catalog_item=c.name) }}">
+          <button class="btn btn-danger delete">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
+        </a>
+      {% endif %}
+      </li>
     {% endfor %}
   </ul>
 </div>

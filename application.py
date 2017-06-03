@@ -117,33 +117,42 @@ def deleteCategory(category_id):
 
 
 
-# selecting specific category shows all items available for that category
-@app.route('/catalog/<string:category>/')
-@app.route('/catalog/<string:category>/items')
-def showCategoryItems(category):
+# READ - show category items
+@app.route('/categories/<int:category_id>/')
+@app.route('/categories/<int:category_id>/items/')
+def showCategoryItems(category_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    creator = getUserInfo(category.user_id)
     items = session.query(
-        CatalogItem).filter_by(category=category).order_by(CatalogItem.id.desc())
+        CatalogItem).filter_by(category_id=category_id).order_by(CatalogItem.id.desc())
     quantity = items.count()
     return render_template(
-        'catalog_menu.html', category=category, items=items, quantity=quantity)
+        'catalog_menu.html',
+        category=category,
+        items=items,
+        quantity=quantity,
+        creator=creator)
 
 
 # READ ITEM - selecting specific item show specific information about that item
-@app.route('/catalog/<string:category>/<string:catalog_item>/')
-def showCatalogItem(category, catalog_item):
+@app.route('/categories/<int:category_id>/<path:catalog_item>/')
+def showCatalogItem(category_id, catalog_item):
+    category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(
-        CatalogItem).filter_by(category=category, name=catalog_item).one()
+        CatalogItem).filter_by(id=category_id, name=catalog_item).one()
     return render_template(
         'catalog_menu_item.html', category=category, item=item)
 
 
 # CREATE ITEM
-@app.route('/catalog/new', methods=['GET','POST'])
+@app.route('/categories/item/new', methods=['GET','POST'])
 def newCatalogItem():
     """return "This page will be for making a new catalog item" """
+    categories = session.query(Category).all()
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
+        print request.form
         addNewItem = CatalogItem(
             name=request.form['name'],
             description=request.form['description'],
@@ -155,55 +164,55 @@ def newCatalogItem():
         flash("New catalog item created!")
         return redirect(url_for('showCatalog'))
     else:
-        return render_template('new_catalog_item.html')
+        return render_template('new_catalog_item.html', categories = categories)
 
-#
-#
-# # UPDATE ITEM
-# @app.route(
-#     '/catalog/<string:category>/<string:catalog_item>/edit', methods=['GET','POST'])
-# def editCatalogItem(category, catalog_item):
-#     """return "This page will be for making a updating catalog item" """
-#     if 'username' not in login_session:
-#         return redirect('/login')
-#     editedItem = session.query(
-#         CatalogItem).filter_by(name=catalog_item).one()
-#     if request.method == 'POST':
-#         if request.form['name']:
-#             editedItem.name = request.form['name']
-#         if request.form['description']:
-#             editedItem.description = request.form['description']
-#         if request.form['price']:
-#             editedItem.price = request.form['price']
-#         if request.form['category']:
-#             editedItem.category = request.form['category']
-#         session.add(editedItem)
-#         session.commit()
-#         flash("Catalog item updated!")
-#         return redirect(url_for('showCatalog'))
-#     else:
-#         return render_template(
-#             'edit_catalog_item.html',
-#             category=category,
-#             catalog_item=catalog_item,
-#             item=editedItem)
-#
-#
-# # DELETE ITEM
-# @app.route(
-#     '/catalog/<string:category>/<string:catalog_item>/delete', methods=['GET','POST'])
-# def deleteCatalogItem(category, catalog_item):
-#     if 'username' not in login_session:
-#         return redirect('/login')
-#     itemToDelete = session.query(CatalogItem).filter_by(name=catalog_item).one()
-#     if request.method == 'POST':
-#         session.delete(itemToDelete)
-#         session.commit()
-#         flash('Catalog Item Successfully Deleted')
-#         return redirect(url_for('showCatalog'))
-#     else:
-#         return render_template('delete_catalog_item.html', item=itemToDelete)
-#
+
+
+# UPDATE ITEM
+@app.route(
+    '/catalog/<string:category>/<string:catalog_item>/edit', methods=['GET','POST'])
+def editCatalogItem(category, catalog_item):
+    """return "This page will be for making a updating catalog item" """
+    if 'username' not in login_session:
+        return redirect('/login')
+    editedItem = session.query(
+        CatalogItem).filter_by(name=catalog_item).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            editedItem.name = request.form['name']
+        if request.form['description']:
+            editedItem.description = request.form['description']
+        if request.form['price']:
+            editedItem.price = request.form['price']
+        if request.form['category']:
+            editedItem.category = request.form['category']
+        session.add(editedItem)
+        session.commit()
+        flash("Catalog item updated!")
+        return redirect(url_for('showCatalog'))
+    else:
+        return render_template(
+            'edit_catalog_item.html',
+            category=category,
+            catalog_item=catalog_item,
+            item=editedItem)
+
+
+# DELETE ITEM
+@app.route(
+    '/catalog/<string:category>/<string:catalog_item>/delete', methods=['GET','POST'])
+def deleteCatalogItem(category, catalog_item):
+    if 'username' not in login_session:
+        return redirect('/login')
+    itemToDelete = session.query(CatalogItem).filter_by(name=catalog_item).one()
+    if request.method == 'POST':
+        session.delete(itemToDelete)
+        session.commit()
+        flash('Catalog Item Successfully Deleted')
+        return redirect(url_for('showCatalog'))
+    else:
+        return render_template('delete_catalog_item.html', item=itemToDelete)
+
 
 # Login route, create anit-forgery state token
 @app.route('/login')

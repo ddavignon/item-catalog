@@ -4,7 +4,7 @@
 	    <div class="col-md-12 card list-card">
 	    <!-- <img class="img-thumbnail pull-left" src="http://placehold.it/150" alt="image placeholder" /> -->
         	<span class="name">
-    			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
+    			<a href="{{ url_for('showCatalogItem', category_id=i.category_id, catalog_item=i.name) }}" >
     				<h3>{{i.name}}<br><small>({{ i.category.name }})</small></h3>
     			</a>
         	</span>

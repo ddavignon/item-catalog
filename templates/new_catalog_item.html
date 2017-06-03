@@ -24,53 +24,13 @@
 					<label for="Category">Category:</label>
 					<div class="row">
 						<div class="col-md-3">
+							{% for c in categories %}
 							<div class="radio">
 							  <label>
-							    <input type="radio" name="category" id="category1" value="Soccer">Soccer
+							    <input type="radio" name="category" id="{{c.id}}" value="{{c.id}}">{{c.name}}
 							  </label>
 							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category2" value="Basketball">Basketball
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category3" value="Baseball">Baseball
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category4" value="Frisbee">Frisbee
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category5" value="Snowboarding">Snowboarding
-							  </label>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category6" value="Rock Climbing">Rock Climbing
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category7" value="Foosball">Foosball
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category8" value="Skating">Skating
-							  </label>
-							</div>
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="category9" value="Hockey">Hockey
-							  </label>
-							</div>
+							{% endfor %}
 						</div>
 					</div>
 					<button type="submit" class="btn btn-basic" id="submit" type="submit">
