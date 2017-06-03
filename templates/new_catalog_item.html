@@ -21,18 +21,7 @@
 						<div class="input-group-addon">$</div>
 						<input type ="text" class="form-control" maxlength="10" name="price" placeholder="Price in $">
 					</div>
-					<label for="Category">Category:</label>
-					<div class="row">
-						<div class="col-md-3">
-							{% for c in categories %}
-							<div class="radio">
-							  <label>
-							    <input type="radio" name="category" id="{{c.id}}" value="{{c.id}}">{{c.name}}
-							  </label>
-							</div>
-							{% endfor %}
-						</div>
-					</div>
+					{% include "category_form_list.html" %}
 					<button type="submit" class="btn btn-basic" id="submit" type="submit">
 					<span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Create</button>
 					<button class="btn btn-default delete">

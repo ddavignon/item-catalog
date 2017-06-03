@@ -19,12 +19,12 @@
 			</p>
 		    {% if item.user_id == session.user_id %}
 		    <div class="editdeletepane pull-right">
-		        <a href="{{ url_for('editCatalogItem', category=item.category, catalog_item=item.name) }}">
+		        <a href="{{ url_for('editCatalogItem', category_id=item.category_id, catalog_item_id=item.id) }}">
 		        	<button class="btn btn-default edit">
 						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
 							Edit
 					</button></a>
-		        <a href="{{ url_for('deleteCatalogItem', category=item.category, catalog_item=item.name) }}">
+		        <a href="{{ url_for('deleteCatalogItem', category_id=item.category_id, catalog_item_id=item.id) }}">
 		        	<button class="btn btn-danger delete">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
 							Delete

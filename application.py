@@ -139,7 +139,7 @@ def showCategoryItems(category_id):
 def showCatalogItem(category_id, catalog_item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(
-        CatalogItem).filter_by(id=catalog_item_id, category_id=category_id).one()
+        CatalogItem).filter_by(id=catalog_item_id).one()
     return render_template(
         'catalog_menu_item.html', category=category, item=item)
 
@@ -169,13 +169,13 @@ def newCatalogItem():
 
 # UPDATE ITEM
 @app.route(
-    '/catalog/<string:category>/<string:catalog_item>/edit', methods=['GET','POST'])
-def editCatalogItem(category, catalog_item):
+    '/categories/<int:category_id>/item/<int:catalog_item_id>/edit', methods=['GET','POST'])
+def editCatalogItem(category_id, catalog_item_id):
     """return "This page will be for making a updating catalog item" """
     if 'username' not in login_session:
         return redirect('/login')
     editedItem = session.query(
-        CatalogItem).filter_by(name=catalog_item).one()
+        CatalogItem).filter_by(id=catalog_item_id).one()
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
@@ -190,20 +190,20 @@ def editCatalogItem(category, catalog_item):
         flash("Catalog item updated!")
         return redirect(url_for('showCatalog'))
     else:
+        categories = session.query(Category).all()
         return render_template(
             'edit_catalog_item.html',
-            category=category,
-            catalog_item=catalog_item,
+            categories=categories,
             item=editedItem)
 
 
 # DELETE ITEM
 @app.route(
-    '/catalog/<string:category>/<string:catalog_item>/delete', methods=['GET','POST'])
-def deleteCatalogItem(category, catalog_item):
+    '/categories/<int:category_id>/item/<int:catalog_item_id>/delete', methods=['GET','POST'])
+def deleteCatalogItem(category_id, catalog_item_id):
     if 'username' not in login_session:
         return redirect('/login')
-    itemToDelete = session.query(CatalogItem).filter_by(name=catalog_item).one()
+    itemToDelete = session.query(CatalogItem).filter_by(id=catalog_item_id).one()
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
