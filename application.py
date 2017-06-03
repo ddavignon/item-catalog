@@ -64,11 +64,8 @@ def newCategory():
         return redirect('/login')
     if request.method == 'POST':
         print login_session
-        # if 'user_id' not in login_session and 'email' in login_session:
-        #     login_session['user_id'] = getUserID(login_session['email'])
-        # else:
-        #     flash('Could not find user!')
-        #     return redirect(url_for('showCatalog'))
+        if 'user_id' not in login_session and 'email' in login_session:
+            login_session['user_id'] = getUserID(login_session['email'])
         newCategory = Category(
             name=request.form['name'],
             user_id=login_session['user_id'])
@@ -122,12 +119,14 @@ def deleteCategory(category_id):
 @app.route('/categories/<int:category_id>/items/')
 def showCategoryItems(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
+    categories = session.query(Category).all()
     creator = getUserInfo(category.user_id)
     items = session.query(
         CatalogItem).filter_by(category_id=category_id).order_by(CatalogItem.id.desc())
     quantity = items.count()
     return render_template(
         'catalog_menu.html',
+        categories=categories,
         category=category,
         items=items,
         quantity=quantity,
