@@ -4,6 +4,13 @@
     <div class="navbar-header">
       <a class="navbar-brand" href="{{ url_for('showCatalog') }}">Catalog App</a>
     </div>
+   <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    {% if session.user_id %}
+     <ul class="nav navbar-nav">
+      <li><a href="{{ url_for('newCategory') }}">Add Category</a></li>
+     </ul>
+    {% endif %}
       <ul class="nav navbar-nav navbar-right">
         {%if 'username' not in session %}
           <li><a href="{{url_for('showLogin')}}">Click Here to Login </a></li>

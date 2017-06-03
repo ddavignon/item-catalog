@@ -5,7 +5,7 @@
 	    <!-- <img class="img-thumbnail pull-left" src="http://placehold.it/150" alt="image placeholder" /> -->
         	<span class="name">
     			<a href="{{ url_for('showCatalogItem', category=i.category, catalog_item=i.name) }}" >
-    				<h3>{{i.name}}<br><small>({{ i.category }})</small></h3>
+    				<h3>{{i.name}}<br><small>({{ i.category.name }})</small></h3>
     			</a>
         	</span>
 	        {% if i.user_id == session.user_id %}
