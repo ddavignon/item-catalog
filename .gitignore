@@ -1,2 +1,9 @@
 *.pyc
 *.db
+
+.idea/
+
+fb_client_secrets.json
+
+client_secrets.json
+
