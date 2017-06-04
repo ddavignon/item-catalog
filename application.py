@@ -1,3 +1,4 @@
+from functools import wraps
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash  # noqa
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
@@ -28,6 +29,16 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+
+# Login required decorator
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in login_session:
+            return redirect(url_for('showLogin'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 # --------------------------------------
@@ -79,10 +90,9 @@ def showCatalog():
 
 # CREATE - New category
 @app.route('/categories/new', methods=['GET', 'POST'])
+@login_required
 def newCategory():
     """Allows user to create new category"""
-    if 'username' not in login_session:
-        return redirect('/login')
     if request.method == 'POST':
         print login_session
         if 'user_id' not in login_session and 'email' in login_session:
@@ -100,10 +110,9 @@ def newCategory():
 
 # EDIT a category
 @app.route('/categories/<int:category_id>/edit/', methods=['GET', 'POST'])
+@login_required
 def editCategory(category_id):
     """Allows user to edit an existing category"""
-    if 'username' not in login_session:
-        return redirect('/login')
     editedCategory = session.query(
         Category).filter_by(id=category_id).one()
     if editedCategory.user_id != login_session['user_id']:
@@ -122,10 +131,9 @@ def editCategory(category_id):
 
 # DELETE a category
 @app.route('/categories/<int:category_id>/delete/', methods=['GET', 'POST'])
+@login_required
 def deleteCategory(category_id):
     """Allows user to delete an existing category"""
-    if 'username' not in login_session:
-        return redirect('/login')
     categoryToDelete = session.query(
         Category).filter_by(id=category_id).one()
     if categoryToDelete.user_id != login_session['user_id']:
@@ -180,11 +188,10 @@ def showCatalogItem(category_id, catalog_item_id):
 
 # CREATE ITEM
 @app.route('/categories/item/new', methods=['GET', 'POST'])
+@login_required
 def newCatalogItem():
     """return "This page will be for making a new catalog item" """
     categories = session.query(Category).all()
-    if 'username' not in login_session:
-        return redirect('/login')
     if request.method == 'POST':
         addNewItem = CatalogItem(
             name=request.form['name'],
@@ -204,10 +211,9 @@ def newCatalogItem():
 @app.route(
     '/categories/<int:category_id>/item/<int:catalog_item_id>/edit',
     methods=['GET', 'POST'])
+@login_required
 def editCatalogItem(category_id, catalog_item_id):
     """return "This page will be for making a updating catalog item" """
-    if 'username' not in login_session:
-        return redirect('/login')
     editedItem = session.query(
         CatalogItem).filter_by(id=catalog_item_id).one()
     if editedItem.user_id != login_session['user_id']:
@@ -237,10 +243,9 @@ def editCatalogItem(category_id, catalog_item_id):
 @app.route(
     '/categories/<int:category_id>/item/<int:catalog_item_id>/delete',
     methods=['GET', 'POST'])
+@login_required
 def deleteCatalogItem(category_id, catalog_item_id):
     """return "This page will be for deleting a catalog item" """
-    if 'username' not in login_session:
-        return redirect('/login')
     itemToDelete = session.query(
         CatalogItem).filter_by(id=catalog_item_id).one()
     if itemToDelete.user_id != login_session['user_id']:
@@ -258,6 +263,7 @@ def deleteCatalogItem(category_id, catalog_item_id):
 # --------------------------------------
 # Login Handling
 # --------------------------------------
+
 # Login route, create anit-forgery state token
 @app.route('/login')
 def showLogin():
