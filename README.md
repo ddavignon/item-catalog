@@ -121,4 +121,4 @@ This program uses third-party auth with Google or Facebook. Some of the technolo
 - Add an additional data model so that users can add Stores
 - Image Upload, possible future addition
 - Styling and layout could improve
-- Implement CSRF protection on your CRUD operations.
+- Implement CSRF protection on CRUD operations.
