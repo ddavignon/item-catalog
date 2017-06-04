@@ -106,6 +106,8 @@ def editCategory(category_id):
         return redirect('/login')
     editedCategory = session.query(
         Category).filter_by(id=category_id).one()
+    if editedCategory.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized!')}</script><body onload='myFunction()'>"  # noqa
     if request.method == 'POST':
         if request.form['name']:
             editedCategory.name = request.form['name']
@@ -208,6 +210,8 @@ def editCatalogItem(category_id, catalog_item_id):
         return redirect('/login')
     editedItem = session.query(
         CatalogItem).filter_by(id=catalog_item_id).one()
+    if editedItem.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized!')}</script><body onload='myFunction()'>"  # noqa
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
@@ -239,6 +243,8 @@ def deleteCatalogItem(category_id, catalog_item_id):
         return redirect('/login')
     itemToDelete = session.query(
         CatalogItem).filter_by(id=catalog_item_id).one()
+    if itemToDelete.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized!')}</script><body onload='myFunction()'>"  # noqa
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
