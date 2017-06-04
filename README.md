@@ -10,9 +10,6 @@ A user does not need to be logged in in order to read the categories or items up
 
 This program uses third-party auth with Google or Facebook. Some of the technologies used to build this application include Flask, Bootsrap, Jinja2, and SQLite.
 
-## Why This Project?
-#### (From Udacity Project Overview)
-Modern web applications perform a variety of functions and provide amazing features and utilities to their users; but deep down, it’s really all just creating, reading, updating and deleting data. In this project, you’ll combine your knowledge of building dynamic websites with persistent data storage to create a web application that provides a compelling service to your users.
 
 ## Skills used for this project
 - Python
@@ -56,7 +53,7 @@ Modern web applications perform a variety of functions and provide amazing featu
 
 <img src="assets/categoriesJSON.png" width="800">
 
-## Endpoints
+## REST Endpoints
 
 #### --------------------------------------
 #### CRUD for categories
