@@ -113,12 +113,11 @@ This program uses third-party auth with Google or Facebook. Some of the technolo
 
 ## Know issues
 
-- User can delete category, but all other items remain without updating, needs cascade delete to be added
 - No validation on forms
 
 ## Possible improvements
 
 - Add an additional data model so that users can add Stores
-- Image Upload, possible future addition
+- Image Upload, possible future addition with file upload
 - Styling and layout could improve
 - Implement CSRF protection on CRUD operations.
