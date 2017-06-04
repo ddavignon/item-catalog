@@ -10,7 +10,7 @@
 			</div>
 			<div class="col-md-3 text-right">
 				<h4>${{ item.price }}</h4>
-			</div>		
+			</div>
 		</div>
 		<hr>
 		<div class="row item-description">
@@ -33,6 +33,12 @@
 		    </div>
 		    {% endif %}
 		</div>
+		{% if creator %}
+		<hr>
+		<div class="text-right">
+			Created By:  {{ creator.email }} <img src="{{ creator.picture }}" alt="creator image" style="height: 40px;" />
+		</div>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}

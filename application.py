@@ -119,7 +119,7 @@ def deleteCategory(category_id):
     categoryToDelete = session.query(
         Category).filter_by(id=category_id).one()
     if categoryToDelete.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized!')}</script><body onload='myFunction()'>"
+        return "<script>function myFunction() {alert('You are not authorized!')}</script><body onload='myFunction()'>"  # noqa
     if request.method == 'POST':
         session.delete(categoryToDelete)
         flash('%s Successfully Deleted' % categoryToDelete.name, 'success')
@@ -161,8 +161,9 @@ def showCatalogItem(category_id, catalog_item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(
         CatalogItem).filter_by(id=catalog_item_id).one()
+    creator = getUserInfo(category.user_id)
     return render_template(
-        'catalog_menu_item.html', category=category, item=item)
+        'catalog_menu_item.html', category=category, item=item, creator=creator)
 
 
 # CREATE ITEM
