@@ -407,7 +407,7 @@ def gconnect():
         return response
 
     # Store the access token in the session for later use.
-    login_session['credentials'] = credentials
+    login_session['access_token'] = credentials.to_json()
     login_session['gplus_id'] = gplus_id
 
     # Get user info

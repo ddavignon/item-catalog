@@ -42,7 +42,8 @@ class CatalogItem(Base):
     price = Column(String(8))
 
     category_id = Column(Integer, ForeignKey('category.id'))
-    category = relationship("Category", backref=backref("catalog_items", cascade="all, delete"))
+    category = relationship(
+        "Category", backref=backref("catalog_items", cascade="all, delete"))
 
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
