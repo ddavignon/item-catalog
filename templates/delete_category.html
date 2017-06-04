@@ -1,7 +1,6 @@
 {% extends "main.html" %}
 {% block content %}
 <h2> Are you sure you want to delete {{category.name}}? </h2>
-
 <form action="{{url_for('deleteCategory', category_id=category.id) }}" method = 'post'>
 	<button type="submit" class="btn btn-danger delete" id="submit" type="submit">
 	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete</button>
@@ -12,5 +11,4 @@
 		</a>
 	</button>
 </form>
-
 {% endblock %}

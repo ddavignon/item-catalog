@@ -1,9 +1,7 @@
 {% extends "main.html" %}
 {% block content %}
 <h2> Are you sure you want to delete {{item.name}}? </h2>
-
 <form  method = 'post'>
-
 	<button type="submit" class="btn btn-danger delete" id="submit" type="submit">
 	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete</button>
 	<button class="btn btn-default delete">
@@ -12,7 +10,5 @@
 			Cancel
 		</a>
 	</button>
-	
 </form>
-
 {% endblock %}
